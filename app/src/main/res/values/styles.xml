@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- app branding color for app bar-->
+        <item name="colorPrimary">#070706</item>
+
+        <!-- darker variant for the status bar -->
+        <item name="colorPrimaryDark">#070706</item>
+
+        <!-- theme UI controls like checkboxes and text fields-->
+        <item name="colorAccent">#070706</item>
+
+        <item name="fontFamily">@font/roboto</item>
+
+
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="colorControlNormal">#070706</item>
+    </style>
+
+</resources>
