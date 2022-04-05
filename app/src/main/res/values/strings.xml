@@ -4,4 +4,6 @@
     <string name="notes">Notes</string>
     <string name="content">Type something...</string>
     <string name="search">Search...</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
 </resources>

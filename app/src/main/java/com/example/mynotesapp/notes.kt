@@ -5,26 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "notesTable")
-class notes(title: String?, date: String?, color: String?) {
-
+data class notes(
     @PrimaryKey(autoGenerate = true)
-    val id : Int = 0
+    val id : Int = 0,
 
-    var mtitle : String? = title
-
-    var mdate : String? = date
-
-    var mcolor : String? = color
-
-    fun getTitle() : String? {
-        return mtitle
-    }
-
-    fun getDate() : String? {
-        return mdate
-    }
-
-    fun getColor() : String? {
-        return mcolor
-    }
-}
+    @ColumnInfo(name = "title")
+    val title : String = "",
+    val date : String = ""
+)

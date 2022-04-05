@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/backButton"
-        android:layout_width="55dp"
-        android:layout_height="?android:attr/actionBarSize"
+        android:layout_width="57dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/background"
@@ -21,20 +21,44 @@
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints" />
 
+
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarNewNote"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/saveToolbar"
+        android:layout_width="77dp"
+        android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_toEndOf="@id/backButton"
+        android:background="@drawable/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white">
+
+        <TextView
+            android:id="@+id/saveText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/editButton"
+        android:layout_width="55dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/background"
         android:theme="@style/ToolbarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_baseline_edit_24"
         app:titleTextColor="@color/white"
+        android:visibility="gone"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -43,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:fontFamily="@font/roboto"
-        android:hint="Title"
+        android:hint="@string/title"
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
         android:includeFontPadding="false"
@@ -61,6 +85,7 @@
         android:fontFamily="@font/roboto"
         android:textColor="#333333"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/inputNoteTitle"
         app:layout_constraintStart_toStartOf="@id/inputNoteTitle"
         app:layout_constraintTop_toBottomOf="@id/inputNoteTitle" />
