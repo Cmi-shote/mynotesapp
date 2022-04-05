@@ -7,6 +7,7 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotesapp.databinding.RecyclerviewItemBinding
 
+//created a variable for the adapters list in the main adapter constructor
 class NotesAdapter(notesList: List<notes>) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     private var notesList : List<notes> = notesList
