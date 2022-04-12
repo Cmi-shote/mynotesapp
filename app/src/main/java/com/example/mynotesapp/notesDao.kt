@@ -10,15 +10,9 @@ interface notesDao {
     @Insert
     suspend fun insert(note: notes)
 
-    @Update
-    suspend fun update(note: notes)
-
     @Delete
     suspend fun delete(note: notes)
 
-    @Query("Select * FROM `notesTable`")
-    fun getAllNotes(): Flow<List<notes>>
-
-    @Query("Select * FROM `notesTable` where id=id")
-    fun getEmployedById(id:Int):Flow<notes>
+    @Query("Select * FROM notesTable ORDER BY id DESC")
+    fun getAllNotes():Flow<List<notes>>
 }

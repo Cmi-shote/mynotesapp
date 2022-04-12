@@ -1,5 +1,6 @@
 package com.example.mynotesapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,8 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.mynotesapp.databinding.ActivityNewNoteBinding
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class NewNoteActivity : AppCompatActivity() {
@@ -24,9 +23,10 @@ class NewNoteActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val notesdao = (application as NotesApp).db.notesDao()
+        val notedao = (application as NotesApp).db.notesDao()
+
         binding?.saveToolbar?.setOnClickListener{
-            saveNote(notesdao)
+            saveNote(notedao)
             binding?.saveToolbar?.visibility = View.GONE
             binding?.editButton?.visibility = View.VISIBLE
             binding?.DateTextView?.visibility = View.VISIBLE
@@ -38,23 +38,34 @@ class NewNoteActivity : AppCompatActivity() {
             binding?.DateTextView?.visibility = View.GONE
         }
 
-        binding?.DateTextView?.text = SimpleDateFormat("mmmm, dd, yyyy"
-            , Locale.getDefault()).format(Date())
+        binding?.DateTextView?.text = SimpleDateFormat("MMMM dd, yyyy",
+            Locale.getDefault()).format(Date())
     }
 
     private fun saveNote(notedao : notesDao){
         val title = binding?.inputNoteTitle?.text.toString()
-        val noteText = binding?.noteContent?.text.toString()
+        val date = binding?.DateTextView?.text.toString()
 
-        if (noteText.isNotEmpty() && noteText.isNotEmpty()){
-            lifecycleScope.launch {
-                notedao.insert(notes(0, title, noteText))
-                Toast.makeText(applicationContext, "Note Saved", Toast.LENGTH_SHORT).show()
-            }
-        }else{
-            Toast.makeText(
-                applicationContext, "Note Title or Content cannot be blank",
+        if (title.isEmpty()){
+            Toast.makeText(applicationContext,
+                "Note Title cannot be empty",
                 Toast.LENGTH_SHORT).show()
+        }else {
+            lifecycleScope.launch {
+                notedao.insert(notes(0, title, date))
+                Toast.makeText(
+                    applicationContext,
+                    "Note Added",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
         }
+
+        val intent = Intent()
+        setResult(RESULT_OK, intent)
+        finish()
     }
+
+
 }

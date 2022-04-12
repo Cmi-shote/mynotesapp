@@ -2,54 +2,45 @@ package com.example.mynotesapp
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotesapp.databinding.RecyclerviewItemBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 //created a variable for the adapters list in the main adapter constructor
-class NotesAdapter(notesList: List<notes>) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(private val items: ArrayList<notes>):
+    RecyclerView.Adapter<NotesAdapter.ViewHolder>(){
 
-    private var notesList : List<notes> = notesList
+    class ViewHolder(binding : RecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root){
+        var noteTitle = binding.noteTitle
+        var date = binding.Date
 
-
-    inner class NotesViewHolder(private val itemBinding: RecyclerviewItemBinding)
-        :RecyclerView.ViewHolder(itemBinding.root){
-
-            var texttitle : TextView? = null
-            var textdate : TextView? = null
-
-            fun bindItem(){
-                texttitle = itemBinding.noteTitle
-                textdate = itemBinding.Date
-            }
-
-            fun setNote(notes : notes){
-                texttitle?.text = notes.getTitle()
-                textdate?.text = notes.getDate()
-
-            }
-
-        }
-
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
-        val binding =  RecyclerviewItemBinding.inflate( LayoutInflater
-            .from(parent.context), parent, false)
-
-        return NotesViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-        holder.setNote(notesList[position])
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            RecyclerviewItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+
+        val context = holder.itemView.context
+        val item = items[position]
+
+        holder.noteTitle.text = item.title
+        holder.date.text = item.date
+       // val note : notes = items[position]
+
     }
 
     override fun getItemCount(): Int {
-        return notesList.size
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
+        return items.size
     }
 }
+
+
