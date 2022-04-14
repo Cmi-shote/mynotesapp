@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#333333</color>
+    <color name="salmon">#F96A4B</color>
+    <color name="ORANGE">#DEA44D</color>
+    <color name="lemon">#CBDB57</color>
+    <color name="blue">#00FFFF</color>
+    <color name="purplr">#9585BA</color>
+    <color name="pink">#FF93AC</color>
 </resources>

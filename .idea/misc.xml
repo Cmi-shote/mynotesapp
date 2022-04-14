@@ -4,17 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/background.xml" value="0.224" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/background2.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/ic_add.xml" value="0.224" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/ic_search.xml" value="0.2275" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/miscellaneous_background.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/note_background.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/search_background.xml" value="0.171" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/search_icon_with_padding.xml" value="0.2275" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_edit_note.xml" value="0.21666666666666667" />
-        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_main.xml" value="0.536" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_new_note.xml" value="0.4" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/kk.xml" value="0.21666666666666667" />
-        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/recyclerview_item.xml" value="0.536" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/layouttt.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/recyclerview_item.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/toolbar.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/updatenote.xml" value="0.264" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/menu/menu.xml" value="0.1" />
       </map>
     </option>

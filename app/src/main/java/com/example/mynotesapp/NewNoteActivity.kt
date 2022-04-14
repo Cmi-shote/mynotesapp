@@ -45,10 +45,11 @@ class NewNoteActivity : AppCompatActivity() {
     private fun saveNote(notedao : notesDao){
         val title = binding?.inputNoteTitle?.text.toString()
         val date = binding?.DateTextView?.text.toString()
+        val content = binding?.noteContent?.text.toString()
 
-        if (title.isEmpty()){
+        if (title.isEmpty() || content.isEmpty()){
             Toast.makeText(applicationContext,
-                "Note Title cannot be empty",
+                "Note title or content cannot be empty",
                 Toast.LENGTH_SHORT).show()
         }else {
             lifecycleScope.launch {

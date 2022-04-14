@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070706"
+    tools:context=".NewNoteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/backButton"
+        android:layout_width="57dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints" />
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/editButton"
+        android:layout_width="55dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_edit_24"
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/updateNoteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/title"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="#333333"
+        android:textSize="40sp"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        tools:layout_editor_absoluteY="125dp" />
+
+    <TextView
+        android:id="@+id/updateDate"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto"
+        android:textAlignment="viewStart"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/updateNoteTitle"
+        app:layout_constraintTop_toBottomOf="@id/updateNoteTitle" />
+
+    <EditText
+        android:id="@+id/updateContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/content"
+        android:inputType="textMultiLine"
+        android:textColor="@color/white"
+        android:textColorHint="#333333"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updateDate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
