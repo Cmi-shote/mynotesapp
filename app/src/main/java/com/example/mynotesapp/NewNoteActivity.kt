@@ -27,8 +27,6 @@ class NewNoteActivity : AppCompatActivity() {
 
         binding?.saveToolbar?.setOnClickListener{
             saveNote(notedao)
-            binding?.saveToolbar?.visibility = View.GONE
-            binding?.editButton?.visibility = View.VISIBLE
             binding?.DateTextView?.visibility = View.VISIBLE
         }
 
@@ -40,7 +38,10 @@ class NewNoteActivity : AppCompatActivity() {
 
         binding?.DateTextView?.text = SimpleDateFormat("MMMM dd, yyyy",
             Locale.getDefault()).format(Date())
+
+
     }
+
 
     private fun saveNote(notedao : notesDao){
         val title = binding?.inputNoteTitle?.text.toString()

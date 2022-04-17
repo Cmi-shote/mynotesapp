@@ -12,15 +12,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mynotesapp.databinding.ActivityMainBinding
-import com.example.mynotesapp.databinding.UpdatenoteBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(){
     private var binding: ActivityMainBinding? = null
     lateinit var noteList: ArrayList<notes>
     lateinit var notesAdapter: NotesAdapter
-    var REQUEST_CODE_ADD = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,20 @@ class MainActivity : AppCompatActivity(){
             binding?.linearLayout?.visibility = View.VISIBLE
         }
 
+        binding?.searchEditText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                filter(p0.toString(), notedao)
+            }
+
+        })
 
         lifecycleScope.launch {
             notedao.getAllNotes().collect {
@@ -64,22 +79,14 @@ class MainActivity : AppCompatActivity(){
         notedao: notesDao
     ) {
         if (notesList.isNotEmpty()) {
-            val itemAdapter = NotesAdapter(notesList,
-                {
-                    updateId ->
-                    updateNote(updateId, notedao)
-                },
-
-                {
-                    deleteId ->
-                    lifecycleScope.launch{
-                        notedao.getAllNotesById(deleteId).collect{
-                            deleteNote(deleteId, notedao)
-                        }
-                    }
-
+            val itemAdapter = NotesAdapter(notesList
+            )
+            { deleteId ->
+                lifecycleScope.launch {
+                    notedao.getAllNotesById(deleteId).collect { deleteNote(deleteId, notedao) }
                 }
-                )
+
+            }
 
             binding?.notesRecyclerView?.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -87,58 +94,10 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun updateNote(id:Int, notedao: notesDao){
-        Toast.makeText(
-            applicationContext,
-            "Note Update",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        /*
-        val intent = Intent(applicationContext, UpdatenoteBinding::class.java)
-        intent.putExtra("isViewOrUpdate", true)
-        val binding = UpdatenoteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        lifecycleScope.launch{
-            notedao.getAllNotesById(id).collect {
-
-                binding.updateNoteTitle.setText(it.title)
-                binding.updateContent.setText(it.content)
-                binding.updateDate.text = it.date
-
-                val title = binding.updateNoteTitle.text.toString()
-                val date = binding.updateDate.text.toString()
-                val content = binding.updateContent.text.toString()
-
-                if(title.isNotEmpty() && content.isNotEmpty()) {
-                    notedao.update(notes(id, title, date, content))
-                    Toast.makeText(applicationContext,
-                        "Note Updated",
-                        Toast.LENGTH_LONG).show()
-                }else{
-                    Toast.makeText(
-                            applicationContext,
-                            "Name or Email cannot be blank",
-                            Toast.LENGTH_LONG
-                        ).show()
-                }
-
-            }
-        }
-
-        */
-    }
-
 
     private fun deleteNote(id:Int, nodedao:notesDao){
-        Toast.makeText(
-            applicationContext,
-            "Note Deleted",
-            Toast.LENGTH_SHORT
-        ).show()
 
-        /* val builder = AlertDialog.Builder(this)
+         val builder = AlertDialog.Builder(this)
          builder.setTitle("Delete Note")
 
          builder.setIcon(android.R.drawable.ic_dialog_alert)
@@ -146,11 +105,11 @@ class MainActivity : AppCompatActivity(){
          //if yes
          builder.setPositiveButton("Yes"){ dialogInterface, _ ->
              lifecycleScope.launch{
-                 nodedao.delete(notes(0))
+                 nodedao.delete(notes(id))
                  Toast.makeText(
                      applicationContext,
                      "Note deleted.",
-                     Toast.LENGTH_LONG
+                     Toast.LENGTH_SHORT
                  ).show()
 
                  dialogInterface.dismiss()
@@ -169,8 +128,24 @@ class MainActivity : AppCompatActivity(){
          alertDialog.show()  // show the dialog to UI
 
 
-         */
     }
 
 
+    private fun filter(text: String, notedao: notesDao){
+        val filteredNotes = ArrayList<notes>()
+        lifecycleScope.launch {
+            notedao.getAllNotes().collect { it ->
+                val list = ArrayList(it)
+
+                list.filterTo(filteredNotes) {
+                    it.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))
+                }
+            }
+
+
+                notesAdapter.filterList(filteredNotes)
+
+            }
+
+        }
 }

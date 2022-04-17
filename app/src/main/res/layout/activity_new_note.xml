@@ -80,16 +80,16 @@
 
     <TextView
         android:id="@+id/DateTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
+        android:layout_marginLeft="16dp"
         android:textColor="#333333"
         android:textSize="16sp"
-        android:textAlignment="viewStart"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/inputNoteTitle"
-        app:layout_constraintStart_toStartOf="@id/inputNoteTitle"
-        app:layout_constraintTop_toBottomOf="@id/inputNoteTitle" />
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputNoteTitle"
+        tools:text="April 17, 2022" />
 
     <EditText
         android:id="@+id/noteContent"
