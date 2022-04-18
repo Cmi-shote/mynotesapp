@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
     lateinit var noteList: ArrayList<notes>
     lateinit var notesAdapter: NotesAdapter
@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity(){
     }
 
 
-
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -79,7 +77,8 @@ class MainActivity : AppCompatActivity(){
         notedao: notesDao
     ) {
         if (notesList.isNotEmpty()) {
-            val itemAdapter = NotesAdapter(notesList
+            val itemAdapter = NotesAdapter(
+                notesList
             )
             { deleteId ->
                 lifecycleScope.launch {
@@ -95,57 +94,38 @@ class MainActivity : AppCompatActivity(){
     }
 
 
-    private fun deleteNote(id:Int, nodedao:notesDao){
+    private fun deleteNote(id: Int, nodedao: notesDao) {
 
-         val builder = AlertDialog.Builder(this)
-         builder.setTitle("Delete Note")
+        lifecycleScope.launch {
+            nodedao.delete(notes(id))
+            Toast.makeText(
+                applicationContext,
+                "Note deleted.",
+                Toast.LENGTH_SHORT
+            ).show()
 
-         builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-         //if yes
-         builder.setPositiveButton("Yes"){ dialogInterface, _ ->
-             lifecycleScope.launch{
-                 nodedao.delete(notes(id))
-                 Toast.makeText(
-                     applicationContext,
-                     "Note deleted.",
-                     Toast.LENGTH_SHORT
-                 ).show()
-
-                 dialogInterface.dismiss()
-             }
-
-         }
-
-         //if no
-         builder.setNegativeButton("No") { dialogInterface, _ ->
-             dialogInterface.dismiss() // Dialog will be dismissed
-         }
-         // Create the AlertDialog
-         val alertDialog: AlertDialog = builder.create()
-         // Set other dialog properties
-         alertDialog.setCancelable(false) // Will not allow user to cancel after clicking on remaining screen area.
-         alertDialog.show()  // show the dialog to UI
+        }
 
 
     }
 
 
-    private fun filter(text: String, notedao: notesDao){
+    private fun filter(text: String, notedao: notesDao) {
         val filteredNotes = ArrayList<notes>()
         lifecycleScope.launch {
             notedao.getAllNotes().collect { it ->
                 val list = ArrayList(it)
 
                 list.filterTo(filteredNotes) {
-                    it.title.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))
+                    it.title.lowercase(Locale.getDefault())
+                        .contains(text.lowercase(Locale.getDefault()))
                 }
             }
 
 
-                notesAdapter.filterList(filteredNotes)
-
-            }
+            notesAdapter.filterList(filteredNotes)
 
         }
+
+    }
 }
