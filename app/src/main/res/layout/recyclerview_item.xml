@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
-    android:background="@drawable/background2"
     android:orientation="vertical">
 
 
@@ -25,7 +24,7 @@
         android:layout_margin="16dp"
         android:fontFamily="@font/roboto"
         android:textAlignment="textStart"
-        android:textColor="#28281B"
+        android:textColor="#38382B"
         android:textSize="18sp" />
 
     <TextView
