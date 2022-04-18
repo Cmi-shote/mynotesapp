@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotesapp.databinding.RecyclerviewItemBinding
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 //created a variable for the adapters list in the main adapter constructor
@@ -20,7 +21,6 @@ class NotesAdapter(
 
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
-    private var selectedItemPosition: Int = 0
 
     class ViewHolder(binding: RecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var noteTitle = binding.noteTitle
@@ -45,7 +45,7 @@ class NotesAdapter(
         val item = items[position]
         holder.noteTitle.text = item.title
         holder.date.text = item.date
-        // holder.content.text = item.content
+
         val code: Int = getRandomColor()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             holder.parent.setBackgroundColor(holder.parent.resources.getColor(code, null))
@@ -98,6 +98,7 @@ class NotesAdapter(
         this.items = filteredNames
         notifyDataSetChanged()
     }
+
 
 
 }

@@ -70,6 +70,7 @@
             android:fontFamily="@font/roboto"
             android:imeOptions="actionSearch"
             android:hint="@string/search"
+            android:textCursorDrawable="@drawable/edittext"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:textAlignment="viewStart"

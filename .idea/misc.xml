@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/background.xml" value="0.224" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/background2.xml" value="0.1" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/edittext.xml" value="0.2275" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/ic_add.xml" value="0.224" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2275" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/ic_create_outline.xml" value="0.2275" />
@@ -13,14 +14,15 @@
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/note_background.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/search_background.xml" value="0.171" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/drawable/search_icon_with_padding.xml" value="0.2275" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout-v31/recyclerview_item.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_edit_note.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_main.xml" value="0.36738703339882123" />
-        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_new_note.xml" value="0.411214953271028" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_new_note.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/activity_updatenote.xml" value="0.40804020100502514" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/dialogupdate.xml" value="0.11820652173913043" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/kk.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/layouttt.xml" value="0.21666666666666667" />
-        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/recyclerview_item.xml" value="0.35656836461126007" />
+        <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/recyclerview_item.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/toolbar.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/layout/updatenote.xml" value="0.1" />
         <entry key="..\:/Users/bglag/Downloads/MyNotesApp/app/src/main/res/menu/menu.xml" value="0.1" />
