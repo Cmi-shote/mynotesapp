@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface notesDao {
 
     //to store data
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(note: notes)
 
     @Delete

@@ -26,10 +26,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val notedao = (application as NotesApp).db.notesDao()
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        val notedao = (application as NotesApp).db.notesDao()
+
 
         binding?.addButton?.setOnClickListener {
             val intent = Intent(this, NewNoteActivity::class.java)

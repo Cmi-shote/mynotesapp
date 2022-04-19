@@ -28,7 +28,6 @@ class NotesAdapter(
         var content = binding.content
         var parent = binding.noteLayout
 
-
     }
 
 
