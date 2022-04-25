@@ -1,6 +1,7 @@
 package com.example.mynotesapp
 
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
@@ -21,12 +22,14 @@ class NotesAdapter(
 
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
+    lateinit var mNoteViewModel : NoteViewModel
 
     class ViewHolder(binding: RecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var noteTitle = binding.noteTitle
         var date = binding.Date
         var content = binding.content
         var parent = binding.noteLayout
+
 
     }
 
@@ -53,9 +56,11 @@ class NotesAdapter(
 
 
         holder.parent.setOnClickListener {
-            var intent = Intent(it.context, updatenote::class.java)
+            val intent = Intent(it.context, updatenote::class.java)
+            intent.putExtra("id", item.id)
             intent.putExtra("title", item.title)
             intent.putExtra("date", item.date)
+            intent.putExtra("content", item.content)
             it.context.startActivity(intent)
 
         }
@@ -92,10 +97,15 @@ class NotesAdapter(
         return items.size
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
-    fun filterList(filteredNames: ArrayList<notes>) {
-        this.items = filteredNames
+    fun setData(note: List<notes>){
+        this.items = note as ArrayList<notes>
         notifyDataSetChanged()
+    }
+
+    private fun deleteNote(id: Int, note:notes) {
+        //mNoteViewModel.deleteNote(note)
     }
 
 

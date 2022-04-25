@@ -8,18 +8,16 @@ import androidx.room.PrimaryKey
 class notes(
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    val id: Int,
 
     @ColumnInfo(name = "title")
-    var title: String = "",
+    val title: String,
+
+    @ColumnInfo(name = "content")
+    val content: String,
 
     @ColumnInfo(name = "date")
-    var date: String = "",
+    val date: String
 
-  /*  @ColumnInfo(name = "content")
-    var content: String = ""
-
-
-
-   */
     )
+

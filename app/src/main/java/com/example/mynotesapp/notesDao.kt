@@ -1,5 +1,6 @@
 package com.example.mynotesapp
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -21,4 +22,10 @@ interface notesDao {
 
     @Query("Select * from `notesTable` where id=:id")
     fun getAllNotesById(id:Int):Flow<notes>
+
+    @Query("SELECT * FROM notesTable ORDER BY id ASC")
+    fun readAllData(): LiveData<List<notes>>
+
+    @Query("SELECT * FROM notesTable WHERE title LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): LiveData<List<notes>>
 }

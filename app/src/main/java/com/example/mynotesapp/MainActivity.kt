@@ -4,11 +4,10 @@ package com.example.mynotesapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mynotesapp.databinding.ActivityMainBinding
@@ -17,11 +16,12 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private var binding: ActivityMainBinding? = null
     lateinit var noteList: ArrayList<notes>
-    lateinit var notesAdapter: NotesAdapter
-
+    lateinit var itemAdapter: NotesAdapter
+    private lateinit var tempArrayList: ArrayList<notes>
+    private lateinit var mNoteViewModel : NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,32 +31,12 @@ class MainActivity : AppCompatActivity() {
 
         val notedao = (application as NotesApp).db.notesDao()
 
+        mNoteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
         binding?.addButton?.setOnClickListener {
             val intent = Intent(this, NewNoteActivity::class.java)
             startActivity(intent)
-
         }
-
-        binding?.searchIcon?.setOnClickListener {
-            binding?.searchIcon?.visibility = View.GONE
-            binding?.linearLayout?.visibility = View.VISIBLE
-        }
-
-        binding?.searchEditText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                filter(p0.toString(), notedao)
-            }
-
-        })
 
         lifecycleScope.launch {
             notedao.getAllNotes().collect {
@@ -78,25 +58,59 @@ class MainActivity : AppCompatActivity() {
         notedao: notesDao
     ) {
         if (notesList.isNotEmpty()) {
-            val itemAdapter = NotesAdapter(
+            itemAdapter = NotesAdapter(
                 notesList
             )
-            { deleteId ->
-                lifecycleScope.launch {
-                    notedao.getAllNotesById(deleteId).collect { deleteNote(deleteId, notedao) }
-                }
+           { deleteId ->
 
+               deleteNote(deleteId)
             }
+
 
             binding?.notesRecyclerView?.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             binding?.notesRecyclerView?.adapter = itemAdapter
+
+            //getting all the data from room data base
+            mNoteViewModel.readAllData.observe(this) {
+                itemAdapter.setData(it)
+            }
+
+
         }
     }
 
 
-    private fun deleteNote(id: Int, nodedao: notesDao) {
+    private fun deleteNote(id: Int) {
 
+        lifecycleScope.launch {
+            val note = notes(id, "", "", "")
+            //notedao.delete(notes(id, "", "", ""))
+            mNoteViewModel.deleteNote(note)
+
+            Toast.makeText(
+                applicationContext,
+                "Note deleted successfully.",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        /*val builder = AlertDialog.Builder(this)
+        builder.setPositiveButton("Yes"){_,_->
+
+
+        builder.setNegativeButton("No"){_,_ ->
+
+        }
+
+        builder.setTitle("Delete Note")
+        builder.create().show()
+
+
+
+         */
+
+/*
         lifecycleScope.launch {
             nodedao.delete(notes(id))
             Toast.makeText(
@@ -107,26 +121,47 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+ */
 
-    }
-
-
-    private fun filter(text: String, notedao: notesDao) {
-        val filteredNotes = ArrayList<notes>()
-        lifecycleScope.launch {
-            notedao.getAllNotes().collect { it ->
-                val list = ArrayList(it)
-
-                list.filterTo(filteredNotes) {
-                    it.title.lowercase(Locale.getDefault())
-                        .contains(text.lowercase(Locale.getDefault()))
-                }
-            }
-
-
-            notesAdapter.filterList(filteredNotes)
 
         }
 
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        menuInflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search?.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+
+        searchView?.setOnQueryTextListener(this)
+
+        return true
     }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if(query != null){
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if(newText != null){
+            searchDatabase(newText)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query: String){
+        val searchQuery = "%$query%"
+
+        mNoteViewModel.searchDatabase(searchQuery).observe(this){ list ->
+            list.let {
+                itemAdapter.setData(it)
+            }
+        }
+
+    }
+
 }
