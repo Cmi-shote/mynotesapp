@@ -30,7 +30,6 @@ class NotesAdapter(
         var content = binding.content
         var parent = binding.noteLayout
 
-
     }
 
 
@@ -72,6 +71,7 @@ class NotesAdapter(
 
 
     }
+
 
 
     private fun getRandomColor(): Int {
