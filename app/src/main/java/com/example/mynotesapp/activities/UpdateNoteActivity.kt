@@ -1,29 +1,25 @@
-package com.example.mynotesapp
+package com.example.mynotesapp.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.room.Update
-import com.example.mynotesapp.databinding.ActivityMainBinding
+import com.example.mynotesapp.data.Notes
+import com.example.mynotesapp.roomComponents.NoteViewModel
 import com.example.mynotesapp.databinding.ActivityUpdatenoteBinding
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class updatenote : AppCompatActivity() {
+class UpdateNoteActivity : AppCompatActivity() {
     private var binding: ActivityUpdatenoteBinding? = null
     private lateinit var mNoteViewModel: NoteViewModel
 
     var id : Int = 0
+
+    var color : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,19 +39,19 @@ class updatenote : AppCompatActivity() {
         binding?.updateDate?.text = data.getStringExtra("date")
         binding?.updateContent?.setText(data.getStringExtra("content"))
         id = data.getIntExtra("id", id)
+        color = data.getIntExtra("color", color)
 
-        binding?.updateContent?.setOnClickListener {
-            visibility()
+        binding?.updateContent?.setOnFocusChangeListener { view, b ->
+            if (b)
+                visibility()
         }
 
-        binding?.updateNoteTitle?.setOnClickListener{
-            visibility()
+        binding?.updateNoteTitle?.setOnFocusChangeListener { view, b ->
+            if (b)
+                visibility()
         }
 
         binding?.editButton?.setOnClickListener {
-
-            binding?.updateDate?.text = SimpleDateFormat("MMMM dd, yyyy",
-                Locale.getDefault()).format(Date())
             visibility()
         }
 
@@ -68,22 +64,21 @@ class updatenote : AppCompatActivity() {
     private fun updateNote(id: Int){
         val title = binding?.updateNoteTitle?.text.toString()
         val content = binding?.updateContent?.text.toString()
-        val date = binding?.updateDate?.text.toString()
+        val date = SimpleDateFormat("MMMM dd, yyyy",
+            Locale.getDefault()).format(Date())
 
         if(inputCheck(title, content, date)){
             //create note object
-            val updatedNote = notes(id, title, content, date)
+            val updatedNote = Notes(id, title, content, date, color)
             //update current user
             mNoteViewModel.updateNote(updatedNote)
 
             Toast.makeText(this, "Note Updated!", Toast.LENGTH_LONG).show()
 
             //go back to main activity
-            val intent = Intent()
-            setResult(RESULT_OK, intent)
             finish()
         }else{
-            Toast.makeText(applicationContext,
+            Toast.makeText(this,
                 "Note title or content cannot be empty",
                 Toast.LENGTH_SHORT).show()
         }
@@ -94,6 +89,8 @@ class updatenote : AppCompatActivity() {
     }
 
     private fun visibility(){
+        binding?.updateDate?.text = SimpleDateFormat("MMMM dd, yyyy",
+            Locale.getDefault()).format(Date())
         binding?.saveToolbar?.visibility = View.VISIBLE
         binding?.editButton?.visibility = View.GONE
     }

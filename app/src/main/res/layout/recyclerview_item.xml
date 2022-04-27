@@ -24,7 +24,7 @@
         android:layout_margin="16dp"
         android:fontFamily="@font/roboto"
         android:textColor="#28281B"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/Date"

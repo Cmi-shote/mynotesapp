@@ -1,14 +1,16 @@
-package com.example.mynotesapp
+package com.example.mynotesapp.roomComponents
 
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mynotesapp.R
+import com.example.mynotesapp.activities.UpdateNoteActivity
+import com.example.mynotesapp.data.Notes
 import com.example.mynotesapp.databinding.RecyclerviewItemBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -16,13 +18,10 @@ import kotlin.collections.ArrayList
 
 //created a variable for the adapters list in the main adapter constructor
 class NotesAdapter(
-    private var items: ArrayList<notes>,
+    private var items: ArrayList<Notes>,
     private val deleteListener: (id: Int) -> Unit
 
-
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
-
-    lateinit var mNoteViewModel : NoteViewModel
 
     class ViewHolder(binding: RecyclerviewItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var noteTitle = binding.noteTitle
@@ -41,25 +40,28 @@ class NotesAdapter(
         )
     }
 
+
+    //In the onBindViewHolder function we have set the title, date and content to the title, content and date from the data list
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val item = items[position]
         holder.noteTitle.text = item.title
         holder.date.text = item.date
+        holder.content.text = item.content
 
-        val code: Int = getRandomColor()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            holder.parent.setBackgroundColor(holder.parent.resources.getColor(code, null))
+            holder.parent.setBackgroundColor(holder.parent.resources.getColor(item.color!!, null))
         }
 
 
 
         holder.parent.setOnClickListener {
-            val intent = Intent(it.context, updatenote::class.java)
+            val intent = Intent(it.context, UpdateNoteActivity::class.java)
             intent.putExtra("id", item.id)
             intent.putExtra("title", item.title)
             intent.putExtra("date", item.date)
             intent.putExtra("content", item.content)
+            intent.putExtra("color", item.color)
             it.context.startActivity(intent)
 
         }
@@ -74,23 +76,6 @@ class NotesAdapter(
 
 
 
-    private fun getRandomColor(): Int {
-        val colorCode: MutableList<Int> = ArrayList()
-        colorCode.add(R.color.ORANGE)
-        colorCode.add(R.color.blue)
-        colorCode.add(R.color.yellow)
-        colorCode.add(R.color.pink)
-        colorCode.add(R.color.purplr)
-        colorCode.add(R.color.salmon)
-        colorCode.add(R.color.green)
-
-
-        val randomColor = Random()
-        val number = randomColor.nextInt(colorCode.size)
-        return colorCode[number]
-
-
-    }
 
 
     override fun getItemCount(): Int {
@@ -99,14 +84,12 @@ class NotesAdapter(
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(note: List<notes>){
-        this.items = note as ArrayList<notes>
+    fun setData(note: List<Notes>){
+        this.items = note as ArrayList<Notes>
         notifyDataSetChanged()
     }
 
-    private fun deleteNote(id: Int, note:notes) {
-        //mNoteViewModel.deleteNote(note)
-    }
+
 
 
 

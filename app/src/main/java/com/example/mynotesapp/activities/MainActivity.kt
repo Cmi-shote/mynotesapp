@@ -1,4 +1,4 @@
-package com.example.mynotesapp
+package com.example.mynotesapp.activities
 
 
 import android.content.Intent
@@ -10,17 +10,19 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.mynotesapp.*
+import com.example.mynotesapp.data.Notes
 import com.example.mynotesapp.databinding.ActivityMainBinding
+import com.example.mynotesapp.roomComponents.NoteViewModel
+import com.example.mynotesapp.roomComponents.NotesAdapter
+import com.example.mynotesapp.roomComponents.NotesDao
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private var binding: ActivityMainBinding? = null
-    lateinit var noteList: ArrayList<notes>
     lateinit var itemAdapter: NotesAdapter
-    private lateinit var tempArrayList: ArrayList<notes>
     private lateinit var mNoteViewModel : NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +31,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val notedao = (application as NotesApp).db.notesDao()
 
         mNoteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
@@ -38,12 +39,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             startActivity(intent)
         }
 
-        lifecycleScope.launch {
-            notedao.getAllNotes().collect {
-                val list = ArrayList(it)
-                setupListOfNotesIntoRecyclerView(list, notedao)
-            }
+        mNoteViewModel.readAllData.observe(this) {
+
+            val list = ArrayList(it)
+            setupListOfNotesIntoRecyclerView(list)
         }
+
     }
 
 
@@ -53,13 +54,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         binding = null
     }
 
-    private fun setupListOfNotesIntoRecyclerView(
-        notesList: ArrayList<notes>,
-        notedao: notesDao
-    ) {
+    private fun setupListOfNotesIntoRecyclerView(notesList: ArrayList<Notes>) {
         if (notesList.isNotEmpty()) {
             itemAdapter = NotesAdapter(
-                notesList
+               notesList
             )
            { deleteId ->
 
@@ -84,7 +82,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun deleteNote(id: Int) {
 
         lifecycleScope.launch {
-            val note = notes(id, "", "", "")
+            val note = Notes(id, "", "", "", null)
             //notedao.delete(notes(id, "", "", ""))
             mNoteViewModel.deleteNote(note)
 

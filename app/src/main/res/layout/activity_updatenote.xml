@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="16dp"
     android:background="#252525"
+    android:layout_marginTop="24dp"
     android:theme="@style/AppTheme"
-    tools:context=".updatenote">
+    tools:context=".activities.UpdateNoteActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -62,6 +62,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
+
 
     <EditText
         android:id="@+id/updateNoteTitle"

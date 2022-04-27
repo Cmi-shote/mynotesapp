@@ -1,16 +1,15 @@
-package com.example.mynotesapp
+package com.example.mynotesapp.roomComponents
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView
+import com.example.mynotesapp.data.Notes
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
-    val readAllData : LiveData<List<notes>>
+    val readAllData : LiveData<List<Notes>>
     private val repository : NoteRepo
 
     init{
@@ -19,26 +18,26 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         readAllData = repository.readAllData
     }
 
-    fun insertData(note: notes){
+    fun insertData(note: Notes){
         viewModelScope.launch(Dispatchers.IO){
             repository.insertData(note)
         }
     }
 
-    fun updateNote(note: notes){
+    fun updateNote(note: Notes){
         viewModelScope.launch(Dispatchers.IO){
             repository.update(note)
         }
     }
 
-    fun deleteNote(note: notes){
+    fun deleteNote(note: Notes){
         viewModelScope.launch(Dispatchers.IO){
             repository.delete(note)
         }
 
     }
 
-    fun searchDatabase(searchQuery : String): LiveData<List<notes>> {
+    fun searchDatabase(searchQuery : String): LiveData<List<Notes>> {
         return repository.searchDatabase(searchQuery)
     }
 

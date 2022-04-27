@@ -1,14 +1,15 @@
-package com.example.mynotesapp
+package com.example.mynotesapp.roomComponents
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.mynotesapp.data.Notes
 
-@Database(entities = [notes::class], version = 1, exportSchema = false)
+@Database(entities = [Notes::class], version = 1, exportSchema = false)
 abstract class NotesDatabase : RoomDatabase(){
 
-        abstract fun notesDao() : notesDao
+        abstract fun notesDao() : NotesDao
 
         //now adding a companion object that will help us add functions to the employee database class
 
@@ -18,7 +19,7 @@ abstract class NotesDatabase : RoomDatabase(){
             @Volatile
             private var INSTANCE: NotesDatabase? = null
 
-            fun getInstance(context: Context): NotesDatabase{
+            fun getInstance(context: Context): NotesDatabase {
 
                 synchronized(this){
                     var instance = INSTANCE

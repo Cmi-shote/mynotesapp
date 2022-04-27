@@ -1,11 +1,11 @@
-package com.example.mynotesapp
+package com.example.mynotesapp.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "notesTable")
-class notes(
+class Notes(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int,
@@ -17,7 +17,10 @@ class notes(
     val content: String,
 
     @ColumnInfo(name = "date")
-    val date: String
+    val date: String,
+
+    @ColumnInfo(name = "color")
+    var color: Int?
 
     )
 
